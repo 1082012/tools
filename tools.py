@@ -1,6 +1,22 @@
 #!/usr/bin/env python3
 import os, sys, time, importlib.util, subprocess, base64
 
+# === PASSWORD PROTEKSI ===
+PASSWORD = "GUSTI123"  # ganti sesuai keinginan
+MAX_ATTEMPT = 3
+
+def auth():
+    attempts = 0
+    while attempts < MAX_ATTEMPT:
+        pw = input("Masukkan password: ")
+        if pw == PASSWORD:
+            print("\033[92m[✓] Password benar, akses diberikan!\033[0m\n")
+            return True
+        else:
+            print("\033[91m[✗] Password salah!\033[0m\n")
+            attempts += 1
+    print("\033[91m[!] Terlalu banyak percobaan gagal. Keluar...\033[0m")
+    sys.exit()
 
 # === CEK & INSTALL MODULE ===
 modules = ["requests", "rich"]
@@ -178,5 +194,6 @@ def stalk_npm(pkg):
 
 # === MAIN LOOP ===
 if __name__ == "__main__":
+    auth()
     while True:
         menu()
