@@ -1,40 +1,6 @@
 #!/usr/bin/env python3
 import os, sys, time, importlib.util, subprocess, base64
 
-# === PASSWORD PROTEKSI ===
-# Password "GUSTI123" diencode base64 → "R1VTVEkxMjM="
-_OBFUS_PW = "R1VTVEkxMjM="  # JANGAN GANTI SEMBARANGAN
-MAX_ATTEMPT = 3
-
-def get_password():
-    try:
-        # decode base64
-        pw = base64.b64decode(_OBFUS_PW).decode("utf-8")
-        # validasi hasil decode, biar kalau _OBFUS_PW diubah → langsung error
-        if not pw or len(pw) < 5:
-            raise ValueError("Password corrupt!")
-        return pw
-    except Exception:
-        print("\033[91m[!] File password rusak / diubah!\033[0m")
-        sys.exit(1)
-
-def auth():
-    real_pw = get_password()
-    attempts = 0
-    while attempts < MAX_ATTEMPT:
-        pw = input("Masukkan password: ")
-        if pw == real_pw:
-            print("\033[92m[✓] Password benar, akses diberikan!\033[0m\n")
-            return True
-        else:
-            attempts += 1
-            print(f"\033[91m[✗] Password salah! Percobaan {attempts}/{MAX_ATTEMPT}\033[0m")
-    # Jika gagal 3 kali
-    print("\033[91m[!] Terlalu banyak percobaan! File akan dihapus...\033[0m")
-    try:
-        os.remove(__file__)
-        print("\033[93mFile berhasil dihapus!\033[0m")
-    sys.exit()
 
 # === CEK & INSTALL MODULE ===
 modules = ["requests", "rich"]
